@@ -1,0 +1,5 @@
+rootProject.name = 'bingoProject'
+
+include ':bingoFrontend'
+include ':bingoApiClient'
+

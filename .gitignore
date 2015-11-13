@@ -10,3 +10,14 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# 대상디렉토리 추가
+.gradle
+.settings
+build/
+tatget/
+bingoFrontend/node_modules/
+bingoFrontend/src/libs/
+bingoFrontend/.tmp
+bingoFrontend/dist
+bingoLib/bingo-core/target/

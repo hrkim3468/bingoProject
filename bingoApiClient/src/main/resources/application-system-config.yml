@@ -1,0 +1,45 @@
+---
+spring.profiles: local
+
+system:
+  name: bingoApiClient01
+  domain: bingoc01-local.javacafe.or.kr
+  machineName: local-bingo001.ncl
+  ip: 127.0.0.1
+  listenQueueName: bingoApiClient01 
+
+
+---
+spring.profiles: dev
+
+system:
+  name: bingoApiClient01
+  domain: bingoc01-dev.javacafe.or.kr
+  machineName: dev-bingo001.ncl
+  ip: 127.0.0.1
+  listenQueueName: bingoApiClient01 
+
+
+---
+spring.profiles: staging
+
+system:
+  name: bingoApiClient01
+  domain: bingoc01-stg.javacafe.or.kr
+  machineName: stg-bingo001.ncl
+  ip: 127.0.0.1
+  listenQueueName: bingoApiClient01 
+
+
+---
+spring.profiles: real
+
+system:
+  name: bingoApiClient01
+  domain: bingoc01.javacafe.or.kr
+  machineName: real-bingo001.ncl
+  ip: 127.0.0.1
+  listenQueueName: bingoApiClient01 
+
+
+    

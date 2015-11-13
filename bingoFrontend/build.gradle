@@ -1,0 +1,73 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
+apply plugin: 'java'
+
+
+// Grunt를 이용하여 빌드에 필요한 모듈을 설치한다.
+task gruntInstall(type:Exec) {
+    logging.captureStandardOutput LogLevel.INFO
+    logging.captureStandardError LogLevel.LIFECYCLE
+    
+    inputs.files "package.json"
+    outputs.files "node_modules"
+
+	if(Os.isFamily(Os.FAMILY_WINDOWS)) {
+		commandLine "C:\\Program Files\\nodejs\\npm.cmd", "install"  
+	} else {
+		commandLine "npm", "install"  
+	}     		
+}
+
+// Bower를 이용하여 사용되는 JavaScript 라이브러리를 다운로드한다.	
+task bowerInstall(type:Exec, dependsOn: [gruntInstall]) {
+    logging.captureStandardOutput LogLevel.INFO
+    logging.captureStandardError LogLevel.LIFECYCLE
+    
+    inputs.files "bower.json"
+    outputs.files "src/libs"
+
+	if(Os.isFamily(Os.FAMILY_WINDOWS)) {
+		commandLine "C:\\Program Files\\nodejs\\npm.cmd", "install" 
+	} else {
+		commandLine "npm", "install" 
+	}      		
+}
+
+// Gruntfile.js 파일에 정의된 스크립트를 실행한다.	
+task gruntBuild(type:Exec, dependsOn: [bowerInstall]) {
+    logging.captureStandardOutput LogLevel.INFO
+    logging.captureStandardError LogLevel.LIFECYCLE
+ 	
+ 	inputs.dir "src"
+ 	outputs.dir "dist"
+
+	if(Os.isFamily(Os.FAMILY_WINDOWS)) {
+		commandLine "C:\\Users\\NAVER.AL010\\AppData\\Roaming\\npm\\grunt.cmd", "real"
+	} else {
+		commandLine "grunt", "real"
+	} 	
+}
+
+
+sourceSets.main.resources { 
+	srcDirs "dist" 
+}
+
+jar {
+	from "dist"
+    eachFile { details ->
+        details.path = details.path.startsWith('META-INF') ?: 'static/'+details.path
+    }
+    // Jar has duplicate empty folders (see http://issues.gradle.org/browse/GRADLE-1830)
+    // So we need to set includeEmptyDirs to false
+	includeEmptyDirs = false
+}
+
+jar.dependsOn gruntBuild
+
+clean {
+	delete ".tmp"
+	delete "dist"
+}
+
+

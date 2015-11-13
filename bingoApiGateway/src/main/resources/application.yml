@@ -1,0 +1,13 @@
+app:
+  version: 16ebc682
+
+spring:
+  profiles:
+    active: local
+
+server:
+  port: 8080
+      
+
+  
+    

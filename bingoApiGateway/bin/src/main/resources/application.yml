@@ -1,0 +1,17 @@
+spring:
+  view:
+    prefix: /WEB-INF/jsp/
+    suffix: .jsp
+    
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:file:C:\\tmp\\customer
+    username: sa
+    password:
+
+  thymeleaf:
+    cache: false
+ 
+  jpa:
+    hibernate:
+      ddl-auto: validate
