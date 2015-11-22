@@ -24,35 +24,51 @@ public class AccessLogFilter implements Filter {
 		
 	}
 
-
 	public void destroy() {
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
-	/**
-	 * 요청된 Access Log를 로깅한다. (Health Check 요청일 경우 제외)
-	 */
+		
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
 		if (req instanceof HttpServletRequest) {
-			HttpServletRequest request = (HttpServletRequest)req;
-			String requestUrl = (request.getRequestURL() == null) ? "" : request.getRequestURL().toString();
-			String referer = StringUtils.defaultString(request.getHeader("Referer"), "-");
-			String queryString = StringUtils.defaultIfEmpty(request.getQueryString(), "");
-			
-			String fullURL = requestUrl + (StringUtils.isNotEmpty(queryString) ? "?" + queryString : queryString);
-			if (!fullURL.contains("healthcheck")) {
-				StringBuilder result = new StringBuilder();
-				result.append("요청된 URL").append("  ■  ").append(fullURL).append("  ■  ").append(referer);
-				logger.info("[LOG FILTER] " + result.toString());
-			}
+			urlLogging(req);
 		}
 		
 		chain.doFilter(req, res);
 	}
 
-
+	
+	
+	/**
+	 * 요청된 Access Log를 로깅한다.
+	 * 
+	 * - Health Check 요청일 경우 제외
+	 * - 내부에서 WEB-INF 패스로 리다이렉트되는 요청일 경우 제외
+	 * 
+	 * @param req
+	 */
+	private void urlLogging(ServletRequest req) {
+		HttpServletRequest request = (HttpServletRequest)req;
+		String requestUrl = (request.getRequestURL() == null) ? "" : request.getRequestURL().toString();
+		String referer = StringUtils.defaultString(request.getHeader("Referer"), "-");
+		String queryString = StringUtils.defaultIfEmpty(request.getQueryString(), "");
+		
+		String fullURL = requestUrl + (StringUtils.isNotEmpty(queryString) ? "?" + queryString : queryString);
+		
+		if (fullURL.contains("healthcheck")) {
+			return;
+		}
+		if (fullURL.contains("WEB-INF")) {
+			return;
+		}
+		
+		StringBuilder result = new StringBuilder();
+		result.append("요청된 URL").append("  ■  ").append(fullURL).append("  ■  ").append(referer);
+		
+		logger.info("[LOG FILTER] " + result.toString());		
+	}
+	
+	
 
 	
 }

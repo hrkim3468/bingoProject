@@ -1,11 +1,19 @@
-package kr.or.javacafe.core.manager.vo;
+package kr.or.javacafe.core.manager.queue.message;
 
-public class ConfigVO {
+public class ConfigMessageVO extends MessageVO {
 
+	private String serverType;
 	private String serverName;
 	private String serverIp;
+
 	
 	
+	public String getServerType() {
+		return serverType;
+	}
+	public void setServerType(String serverType) {
+		this.serverType = serverType;
+	}
 	public String getServerName() {
 		return serverName;
 	}
