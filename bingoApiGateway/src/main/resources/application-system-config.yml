@@ -2,6 +2,7 @@
 spring.profiles: local
 
 system:
+  type: API_GATEWAY
   name: bingoApiGateway01
   domain: bingog01-local.javacafe.or.kr
   machineName: local-bingo021.ncl
@@ -13,6 +14,7 @@ system:
 spring.profiles: dev
 
 system:
+  type: API_GATEWAY
   name: bingoApiGateway01
   domain: bingog01-dev.javacafe.or.kr
   machineName: dev-bingo021.ncl
@@ -24,6 +26,7 @@ system:
 spring.profiles: staging
 
 system:
+  type: API_GATEWAY
   name: bingoApiGateway01
   domain: bingog01-stg.javacafe.or.kr
   machineName: stg-bingo021.ncl
@@ -35,6 +38,7 @@ system:
 spring.profiles: real
 
 system:
+  type: API_GATEWAY
   name: bingoApiGateway01
   domain: bingog01.javacafe.or.kr
   machineName: real-bingo021.ncl

@@ -8,6 +8,11 @@ import org.springframework.stereotype.Component;
 public class SystemProperty {
 
 	/**
+	 * 서비스 타입
+	 */
+	private String type;
+	
+	/**
 	 * 논리적인 프로젝트명
 	 */
 	private String name;
@@ -31,83 +36,63 @@ public class SystemProperty {
 	 * 서버에서 Listen 중 인 메세지큐 이름
 	 */
 	private String listenQueueName;
+
 	
 	
 	
 	
-	/**
-	 * {@link #name} 을(를) 반환한다.
-	 * @return {@link #name}
-	 */
+	
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	public String getName() {
 		return name;
 	}
-	/**
-	 * {@link #name} 을(를) 설정한다.
-	 * @param name 설정할 {@link #name}
-	 */
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	/**
-	 * {@link #domain} 을(를) 반환한다.
-	 * @return {@link #domain}
-	 */
+
 	public String getDomain() {
 		return domain;
 	}
-	/**
-	 * {@link #domain} 을(를) 설정한다.
-	 * @param domain 설정할 {@link #domain}
-	 */
+
 	public void setDomain(String domain) {
 		this.domain = domain;
 	}
-	/**
-	 * {@link #machineName} 을(를) 반환한다.
-	 * @return {@link #machineName}
-	 */
+
 	public String getMachineName() {
 		return machineName;
 	}
-	/**
-	 * {@link #machineName} 을(를) 설정한다.
-	 * @param machineName 설정할 {@link #machineName}
-	 */
+
 	public void setMachineName(String machineName) {
 		this.machineName = machineName;
 	}
-	/**
-	 * {@link #ip} 을(를) 반환한다.
-	 * @return {@link #ip}
-	 */
+
 	public String getIp() {
 		return ip;
 	}
-	/**
-	 * {@link #ip} 을(를) 설정한다.
-	 * @param ip 설정할 {@link #ip}
-	 */
+
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
-	/**
-	 * {@link #listenQueueName} 을(를) 반환한다.
-	 * @return {@link #listenQueueName}
-	 */
+
 	public String getListenQueueName() {
 		return listenQueueName;
 	}
-	/**
-	 * {@link #listenQueueName} 을(를) 설정한다.
-	 * @param listenQueueName 설정할 {@link #listenQueueName}
-	 */
+
 	public void setListenQueueName(String listenQueueName) {
 		this.listenQueueName = listenQueueName;
 	}
 	
 	
 	
+
 	
 
 }
