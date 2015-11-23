@@ -1,6 +1,6 @@
 package kr.or.javacafe.core.manager.queue.message;
 
-public class ConfigMessageVO extends MessageVO {
+public class ConfigMessage implements Message {
 
 	private String serverType;
 	private String serverName;

@@ -1,4 +1,4 @@
-package kr.or.javacafe.apiclient.test;
+package kr.or.javacafe.core.spring.component.test;
 
 
 import java.io.IOException;
@@ -18,14 +18,14 @@ import com.rabbitmq.client.Consumer;
 import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
 
-import kr.or.javacafe.apiclient.config.prop.SystemProperty;
+import kr.or.javacafe.core.spring.prop.SystemProperty;
 
 
 
 @Component
-public class QueueMessageSender {
+public class Queue2Test {
 
-	private Logger logger = LoggerFactory.getLogger(QueueMessageSender.class);
+	private Logger logger = LoggerFactory.getLogger(Queue2Test.class);
 	
 	@Autowired
 	private SystemProperty systemPro;
@@ -39,7 +39,7 @@ public class QueueMessageSender {
 	private Connection apiServerConnection;
 	private Channel apiServerChannel;
 	
-	@PostConstruct
+	//@PostConstruct
 	public void init() {
 		try {
 			initApiGatewaySender();

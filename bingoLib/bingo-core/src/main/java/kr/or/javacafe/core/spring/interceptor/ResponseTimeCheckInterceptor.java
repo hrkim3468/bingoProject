@@ -50,8 +50,11 @@ public class ResponseTimeCheckInterceptor extends HandlerInterceptorAdapter {
 		long responseTime = checkEndTime - checkStartTime;
 		logger.debug("[응답시간] " + responseTime + " msec");	
 		
-		ModelMap model = modelAndView.getModelMap();
-		model.addAttribute("_responseTime", responseTime);
+		// API 호출의 경우 modelAndView가 존재하지 않을수 있음
+		if (null != modelAndView) {
+			ModelMap model = modelAndView.getModelMap();
+			model.addAttribute("_responseTime", responseTime);			
+		}
 		
 		super.postHandle(request, response, handler, modelAndView);
 	}

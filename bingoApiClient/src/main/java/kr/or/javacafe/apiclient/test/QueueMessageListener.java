@@ -4,7 +4,6 @@ package kr.or.javacafe.apiclient.test;
 import java.io.IOException;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +19,6 @@ import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
 
 import kr.or.javacafe.apiclient.config.prop.SystemProperty;
-import kr.or.javacafe.core.spring.filter.AccessLogFilter;
 
 
 

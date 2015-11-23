@@ -10,7 +10,7 @@ spring:
       ddl-auto: update
 
 server:
-  port: 9501
+  port: 8080
       
   
     

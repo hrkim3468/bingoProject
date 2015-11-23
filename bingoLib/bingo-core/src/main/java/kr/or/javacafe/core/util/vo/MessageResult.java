@@ -1,15 +1,29 @@
-package kr.or.javacafe.core.manager.queue.message;
+package kr.or.javacafe.core.util.vo;
 
 import java.util.Date;
 
 import kr.or.javacafe.core.manager.queue.env.MessageType;
 
-public abstract class MessageVO {
+public class MessageResult {
 
+	private String result;
 	private MessageType messageType;
-	private Date messageCreateTime;
+	private Date messageCreateTime; 
+	private Object data;
 	
 	
+	public String getResult() {
+		return result;
+	}
+	public void setResult(String result) {
+		this.result = result;
+	}
+	public Object getData() {
+		return data;
+	}
+	public void setData(Object data) {
+		this.data = data;
+	}
 	public MessageType getMessageType() {
 		return messageType;
 	}
@@ -25,7 +39,7 @@ public abstract class MessageVO {
 	
 	
 
-	
 
+	
 	
 }

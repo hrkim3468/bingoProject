@@ -1,6 +1,6 @@
 package kr.or.javacafe.core.manager.queue.message;
 
-public class ResetMessageVO extends MessageVO {
+public class ResetMessage implements Message {
 
 	private String desc;
 	

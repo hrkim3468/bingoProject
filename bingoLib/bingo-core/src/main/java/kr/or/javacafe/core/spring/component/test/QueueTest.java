@@ -1,4 +1,4 @@
-package kr.or.javacafe.apiclient.test;
+package kr.or.javacafe.core.spring.component.test;
 
 
 import java.io.IOException;
@@ -18,19 +18,19 @@ import com.rabbitmq.client.Consumer;
 import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
 
-import kr.or.javacafe.apiclient.config.prop.SystemProperty;
+import kr.or.javacafe.core.spring.prop.SystemProperty;
 
 
 
 @Component
-public class QueueMessageSender {
+public class QueueTest {
 
-	private Logger logger = LoggerFactory.getLogger(QueueMessageSender.class);
+	private Logger logger = LoggerFactory.getLogger(QueueTest.class);
 	
 	@Autowired
 	private SystemProperty systemPro;
 
-	private final static String QUEUE_NAME = "bingo.api.gateway";
+	private final static String QUEUE_NAME = "hello";
 	private final static String QUEUE_SERVER = "localhost";
 	private final static String QUEUE_USER = "guest";
 	private final static String QUEUE_PW = "guest";
@@ -39,13 +39,14 @@ public class QueueMessageSender {
 	private Connection apiServerConnection;
 	private Channel apiServerChannel;
 	
-	@PostConstruct
+	//@PostConstruct
 	public void init() {
 		try {
+			// 
 			initApiGatewaySender();
-			
+			this.recv();
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

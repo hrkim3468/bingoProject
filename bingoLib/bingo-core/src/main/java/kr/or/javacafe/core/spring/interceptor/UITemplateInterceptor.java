@@ -3,8 +3,6 @@ package kr.or.javacafe.core.spring.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.ui.ModelMap;
@@ -24,8 +22,6 @@ import kr.or.javacafe.core.spring.prop.SystemProperty;
  */
 public class UITemplateInterceptor extends HandlerInterceptorAdapter {
 
-	private Logger logger = LoggerFactory.getLogger(UITemplateInterceptor.class);
-
 	@Autowired
 	private Environment env;
 	
@@ -41,11 +37,14 @@ public class UITemplateInterceptor extends HandlerInterceptorAdapter {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
 
-		ModelMap model = modelAndView.getModelMap();
-		//model.addAttribute("_profile", Arrays.toString((env.getActiveProfiles())));
-		model.addAttribute("_profile", env.getActiveProfiles()[0]);
-		model.addAttribute("_databaseProp", databaseProp);
-		model.addAttribute("_systemProp", systemProp);
+		// API 호출의 경우 modelAndView가 존재하지 않을수 있음
+		if (null != modelAndView) {
+			ModelMap model = modelAndView.getModelMap();
+			//model.addAttribute("_profile", Arrays.toString((env.getActiveProfiles())));
+			model.addAttribute("_profile", env.getActiveProfiles()[0]);
+			model.addAttribute("_databaseProp", databaseProp);
+			model.addAttribute("_systemProp", systemProp);			
+		}
 		
 		super.postHandle(request, response, handler, modelAndView);
 	}
