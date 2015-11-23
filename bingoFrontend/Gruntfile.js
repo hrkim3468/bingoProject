@@ -93,7 +93,7 @@ module.exports = function(grunt) {
     connect: {
       main: {
         options: {
-          port: 8080,
+          port: 31589,
           protocol: "http",
           base: {
             path: "src/apps/",
@@ -134,7 +134,7 @@ module.exports = function(grunt) {
   // ========================================================
 
   // 로컬 웹서버 실행 (Local에서 개발시 사용)
-  grunt.registerTask("local", ["clean", "connect", "watch"]);
+  grunt.registerTask("local", ["connect", "watch"]);
   
   // 리얼용 빌드
   grunt.registerTask("real", ["clean", "jshint", "copy:main", "useminPrepare", "concat:generated", "cssmin:generated", "uglify:generated", "usemin"]);

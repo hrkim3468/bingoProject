@@ -2,10 +2,10 @@
 spring.profiles: local
 
 db:
-  driverClassName: org.h2.Driver
-  url: jdbc:h2:file:C:\\tmp\\local_customer
-  username: sa
-  password:
+  driverClassName: com.mysql.jdbc.Driver
+  url: jdbc:mysql://127.0.0.1:3306/bingo_user?autoReconnect=true&useUnicode=true&characterEncoding=utf8
+  username: user
+  password: user
 
 
 ---

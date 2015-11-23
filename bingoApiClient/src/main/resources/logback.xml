@@ -14,13 +14,16 @@
 	<logger name="org.springframework" level="INFO" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
-    <logger name="org.springframework.web" level="DEBUG" additivity="false">
+    <logger name="org.springframework.web" level="INFO" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
     <logger name="org.springframework.web.servlet.resource.ResourceHttpRequestHandler" level="TRACE" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
-	<logger name="kr.or.javacafe" level="INFO" additivity="false">
+	<logger name="org.hibernate.type" level="TRACE" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+	<logger name="kr.or.javacafe" level="DEBUG" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
     

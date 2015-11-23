@@ -4,6 +4,10 @@ app:
 spring:
   profiles:
     active: local
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
 
 server:
   port: 8080

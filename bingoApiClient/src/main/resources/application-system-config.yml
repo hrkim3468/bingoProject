@@ -2,44 +2,48 @@
 spring.profiles: local
 
 system:
-  name: bingoApiClient01
-  domain: bingoc01-local.javacafe.or.kr
-  machineName: local-bingo001.ncl
+  type: API_CLIENT
+  name: bingoClient01
+  domain: bingo-client01-local.javacafe.or.kr
+  machineName: local-bingo-client01.ncl
   ip: 127.0.0.1
-  listenQueueName: bingoApiClient01 
+  listenQueueName:  
 
 
 ---
 spring.profiles: dev
 
 system:
-  name: bingoApiClient01
-  domain: bingoc01-dev.javacafe.or.kr
-  machineName: dev-bingo001.ncl
+  type: API_CLIENT
+  name: bingoClient01
+  domain: bingo-client01-dev.javacafe.or.kr
+  machineName: dev-bingo-client01.ncl
   ip: 127.0.0.1
-  listenQueueName: bingoApiClient01 
+  listenQueueName:  
 
 
 ---
 spring.profiles: staging
 
 system:
-  name: bingoApiClient01
-  domain: bingoc01-stg.javacafe.or.kr
-  machineName: stg-bingo001.ncl
+  type: API_CLIENT
+  name: bingoClient01
+  domain: bingo-client01-stg.javacafe.or.kr
+  machineName: stg-bingo-client01.ncl
   ip: 127.0.0.1
-  listenQueueName: bingoApiClient01 
+  listenQueueName:  
 
 
 ---
 spring.profiles: real
 
 system:
-  name: bingoApiClient01
-  domain: bingoc01.javacafe.or.kr
-  machineName: real-bingo001.ncl
+  type: API_CLIENT
+  name: bingoClient01
+  domain: bingo-client01.javacafe.or.kr
+  machineName: real-bingo-client01.ncl
   ip: 127.0.0.1
-  listenQueueName: bingoApiClient01 
+  listenQueueName:  
 
 
     
