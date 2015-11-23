@@ -1,0 +1,49 @@
+---
+spring.profiles: local
+
+system:
+  type: SERVICE_GAME
+  name: bingoServiceGame01
+  domain: bingo-sg01-local.javacafe.or.kr
+  machineName: local-bingo-sg01.ncl
+  ip: 127.0.0.1
+  listenQueueName:  
+
+
+---
+spring.profiles: dev
+
+system:
+  type: SERVICE_GAME
+  name: bingoServiceGame01
+  domain: bingo-sg01-dev.javacafe.or.kr
+  machineName: dev-bingo-sg01.ncl
+  ip: 127.0.0.1
+  listenQueueName:  
+
+
+---
+spring.profiles: staging
+
+system:
+  type: SERVICE_GAME
+  name: bingoServiceGame01
+  domain: bingo-sg01-stg.javacafe.or.kr
+  machineName: stg-bingo-sg01.ncl
+  ip: 127.0.0.1
+  listenQueueName:  
+
+
+---
+spring.profiles: real
+
+system:
+  type: SERVICE_GAME
+  name: bingoServiceGame01
+  domain: bingo-sg01.javacafe.or.kr
+  machineName: real-bingo-sg01.ncl
+  ip: 127.0.0.1
+  listenQueueName:  
+
+
+    

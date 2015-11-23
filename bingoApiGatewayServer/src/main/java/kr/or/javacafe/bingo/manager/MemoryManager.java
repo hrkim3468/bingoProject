@@ -23,4 +23,9 @@ public class MemoryManager {
 		userManager.start();
 	}
 	
+	
+	public void userManagerReset() {
+		userManager.start();
+	}
+	
 }

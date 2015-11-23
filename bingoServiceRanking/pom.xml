@@ -4,14 +4,14 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>kr.or.javacafe</groupId>
-	<artifactId>bingoServiceUser</artifactId>
+	<artifactId>bingoServiceRanking</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	
 	<!-- 웹서비스를 위해서는 war로 배포해야 한다. -->
 	<packaging>war</packaging>
 
-	<name>bingoServiceUser</name>
-	<description>빙고게임을 위한 User Service 프로젝트</description>
+	<name>bingoServiceRanking</name>
+	<description>빙고게임을 위한 Ranking Service 프로젝트</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

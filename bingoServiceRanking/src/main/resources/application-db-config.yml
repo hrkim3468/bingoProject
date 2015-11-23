@@ -1,0 +1,41 @@
+---
+spring.profiles: local
+
+db:
+  driverClassName: com.mysql.jdbc.Driver
+  url: jdbc:mysql://127.0.0.1:3306/bingo_ranking?autoReconnect=true&useUnicode=true&characterEncoding=utf8
+  username: ranking
+  password: ranking
+
+
+---
+spring.profiles: dev
+
+db:
+  driverClassName: org.h2.Driver
+  url: jdbc:h2:file:C:\\tmp\\dev_customer
+  username: sa
+  password:
+
+
+---
+spring.profiles: staging
+
+db:
+  driverClassName: org.h2.Driver
+  url: jdbc:h2:file:C:\\tmp\\staging_customer
+  username: sa
+  password:
+
+
+---
+spring.profiles: real
+
+db:
+  driverClassName: org.h2.Driver
+  url: jdbc:h2:file:C:\\tmp\\real_customer
+  username: sa
+  password:
+
+
+    

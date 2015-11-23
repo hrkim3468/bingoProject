@@ -1,5 +1,7 @@
 package kr.or.javacafe.bingo.manager;
 
+import java.util.LinkedHashMap;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
@@ -21,12 +23,15 @@ public class QueueManager {
 
 	private Logger logger = LoggerFactory.getLogger(QueueManager.class);
 
-	ConfigMessageSender sender;
+	ConfigMessageSender configSender;
 	ExchangeMesasgeListener exListener;
 	
 	
 	@Autowired
 	private SystemProperty systemProp;
+
+	@Autowired
+	private MemoryManager memoryManager;
 
 	
 	
@@ -40,14 +45,10 @@ public class QueueManager {
 	public void init() {
 		try {
 			// 설정정보 전송
-			sender = new ConfigMessageSender();
+			configSender = new ConfigMessageSender();
 			
-			ConfigMessage message = new ConfigMessage();
-			message.setServerType(systemProp.getType());
-			message.setServerName(systemProp.getName());
-			message.setServerIp(systemProp.getIp());
-			
-			sender.send(message);
+			// 설정정보 전송
+			serverConfigSend();
 			
 			// BroadCast 큐 리슨
 			boardcastReceive();
@@ -66,13 +67,35 @@ public class QueueManager {
 	@PreDestroy
 	public void destroy() {
 		try {
-			sender.release();
+			configSender.release();
+			exListener.release();
 			
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 			e.printStackTrace();
 		}
 	}
+	
+	
+	
+	/**
+	 * 서버 설정정보 메시지 전송 함수
+	 */
+	public void serverConfigSend() {
+		try {		
+			ConfigMessage message = new ConfigMessage();
+			message.setServerType(systemProp.getType());
+			message.setServerName(systemProp.getName());
+			message.setServerIp(systemProp.getIp());
+			
+			configSender.send(message);
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		}		
+	}
+	
 	
 	
 	
@@ -84,8 +107,11 @@ public class QueueManager {
 			MessageHandler handler = new MessageHandler() {			
 				public void onMessage(MessageType messageType, Object data) {
 					logger.info("============> 메세지 타입 : " + messageType);
+					@SuppressWarnings({ "unchecked", "unused" })
+					LinkedHashMap<String, Object> map = (LinkedHashMap<String, Object>) data;
 					
-					if (messageType.RESET.equals(messageType)) {					
+					if (messageType.RESET.equals(messageType)) {
+						memoryManager.userManagerReset();
 						return;
 					}
 					
@@ -94,7 +120,7 @@ public class QueueManager {
 				}
 			};
 			
-			exListener = new ExchangeMesasgeListener(QueueInfo.EXCHANGE_SERVICE_USER_QUEUE_NAME, handler);
+			exListener = new ExchangeMesasgeListener(QueueInfo.EXCHANGE_CLIENT_QUEUE_NAME, handler);
 			exListener.start();
 			
 		} catch (Exception e) {
