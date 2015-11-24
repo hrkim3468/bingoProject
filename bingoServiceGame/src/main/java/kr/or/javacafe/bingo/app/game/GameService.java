@@ -38,7 +38,12 @@ public class GameService {
 	
 	@Transactional
 	public GameCheck createGameCheck(Long id, int checkNumber) {
-		return gameCheckService.create(repository.findOne(id), checkNumber);
+		Game game = repository.findOne(id);
+		GameCheck gameCheck = gameCheckService.create(game, checkNumber);
+		
+		gameCheckService.aSyncRankingCheck(game);
+		
+		return gameCheck;
 	}
 
 	

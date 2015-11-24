@@ -13,9 +13,11 @@ import org.springframework.stereotype.Service;
 import kr.or.javacafe.core.manager.queue.env.MessageType;
 import kr.or.javacafe.core.manager.queue.env.QueueInfo;
 import kr.or.javacafe.core.manager.queue.message.ConfigMessage;
+import kr.or.javacafe.core.manager.queue.message.RankingMessage;
 import kr.or.javacafe.core.manager.queue.receiver.ExchangeMesasgeListener;
 import kr.or.javacafe.core.manager.queue.receiver.MessageHandler;
 import kr.or.javacafe.core.manager.queue.sender.ConfigMessageSender;
+import kr.or.javacafe.core.manager.queue.sender.RankingMessageSender;
 import kr.or.javacafe.core.spring.prop.SystemProperty;
 
 @Service
@@ -23,8 +25,11 @@ public class QueueManager {
 
 	private Logger logger = LoggerFactory.getLogger(QueueManager.class);
 
-	ConfigMessageSender configSender;
-	ExchangeMesasgeListener exListener;
+	private ConfigMessageSender configSender;
+	private RankingMessageSender rankingSender;
+	
+	private ExchangeMesasgeListener exListener;
+	
 	
 	
 	@Autowired
@@ -44,8 +49,8 @@ public class QueueManager {
 	@PostConstruct
 	public void init() {
 		try {
-			// 설정정보 전송
 			configSender = new ConfigMessageSender();
+			rankingSender = new RankingMessageSender();
 			
 			// 설정정보 전송
 			serverConfigSend();
@@ -97,6 +102,25 @@ public class QueueManager {
 	}
 	
 	
+	
+	/**
+	 * Ranking 정보 메시지 전송 함수
+	 */
+	public void rankingSend(Long gameId, String uuid, int clearLineCount) {
+		try {		
+			RankingMessage message = new RankingMessage();
+			message.setGameId(gameId);
+			message.setUuid(uuid);
+			message.setClearLineCount(clearLineCount);
+			
+			rankingSender.send(message);
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		}		
+	}
+
 	
 	
 	/**

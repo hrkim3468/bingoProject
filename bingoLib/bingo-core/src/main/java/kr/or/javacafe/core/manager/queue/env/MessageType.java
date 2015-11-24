@@ -3,6 +3,7 @@ package kr.or.javacafe.core.manager.queue.env;
 public enum MessageType {
 
 	SERVER_CONFIG("SERVER_CONFIG", "서버정보 메시지"),
+	RANKING("RANKING", "사용자 랭킹 메시지"),
 	RESET("RESET", "리셋 메시지");
 	
 	

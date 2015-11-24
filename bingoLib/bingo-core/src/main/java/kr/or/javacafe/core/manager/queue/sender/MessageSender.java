@@ -15,6 +15,7 @@ import kr.or.javacafe.core.manager.queue.env.MessageType;
 import kr.or.javacafe.core.manager.queue.env.QueueInfo;
 import kr.or.javacafe.core.manager.queue.message.ConfigMessage;
 import kr.or.javacafe.core.manager.queue.message.Message;
+import kr.or.javacafe.core.manager.queue.message.RankingMessage;
 import kr.or.javacafe.core.manager.queue.message.ResetMessage;
 import kr.or.javacafe.core.util.MessageJsonUtil;
 
@@ -68,6 +69,14 @@ public abstract class MessageSender {
 			channel.queueDeclare(QueueInfo.GATEWAY_QUEUE_NAME, false, false, false, null);
 		    channel.basicPublish("", QueueInfo.GATEWAY_QUEUE_NAME, null, result.getBytes("UTF-8"));
 		
+		} else if (MessageType.RANKING.equals(this.getMessageType())) {
+			
+			// Ranking 정보 메시지 도착시 BingServiceRanking 서버로 메시지를 전송한다.
+			result = MessageJsonUtil.toMessageJSON(this.getMessageType(), (RankingMessage)message);
+			
+			channel.queueDeclare(QueueInfo.SERVICE_RANKING_QUEUE_NAME, false, false, false, null);
+		    channel.basicPublish("", QueueInfo.SERVICE_RANKING_QUEUE_NAME, null, result.getBytes("UTF-8"));
+		    
 		} else if (MessageType.RESET.equals(this.getMessageType())) {
 			
 			// 리셋 메시지 도착시 모든 서버로 메세지를 브로드캐스팅한다.

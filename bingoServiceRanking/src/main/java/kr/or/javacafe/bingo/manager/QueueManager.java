@@ -10,11 +10,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.or.javacafe.bingo.app.ranking.RankingService;
 import kr.or.javacafe.core.manager.queue.env.MessageType;
 import kr.or.javacafe.core.manager.queue.env.QueueInfo;
 import kr.or.javacafe.core.manager.queue.message.ConfigMessage;
+import kr.or.javacafe.core.manager.queue.message.RankingMessage;
 import kr.or.javacafe.core.manager.queue.receiver.ExchangeMesasgeListener;
 import kr.or.javacafe.core.manager.queue.receiver.MessageHandler;
+import kr.or.javacafe.core.manager.queue.receiver.QueueMesasgeListener;
 import kr.or.javacafe.core.manager.queue.sender.ConfigMessageSender;
 import kr.or.javacafe.core.spring.prop.SystemProperty;
 
@@ -23,8 +26,10 @@ public class QueueManager {
 
 	private Logger logger = LoggerFactory.getLogger(QueueManager.class);
 
-	ConfigMessageSender configSender;
-	ExchangeMesasgeListener exListener;
+	private ConfigMessageSender configSender;
+	
+	private QueueMesasgeListener listener;
+	private ExchangeMesasgeListener exListener;
 	
 	
 	@Autowired
@@ -33,6 +38,10 @@ public class QueueManager {
 	@Autowired
 	private MemoryManager memoryManager;
 
+	@Autowired
+	private RankingService rankingService;
+	
+	
 	
 	
 	/**
@@ -44,11 +53,13 @@ public class QueueManager {
 	@PostConstruct
 	public void init() {
 		try {
-			// 설정정보 전송
 			configSender = new ConfigMessageSender();
 			
 			// 설정정보 전송
 			serverConfigSend();
+			
+			// Ranking 정보 큐 리슨
+			rankingReceive();
 			
 			// BroadCast 큐 리슨
 			boardcastReceive();
@@ -94,6 +105,44 @@ public class QueueManager {
 			logger.error(e.getMessage());
 			e.printStackTrace();
 		}		
+	}
+	
+	
+	
+	
+	/**
+	 * Ranking 메세지 콜백 함수
+	 */
+	public void rankingReceive() {
+		try {
+			MessageHandler handler = new MessageHandler() {			
+				public void onMessage(MessageType messageType, Object data) {
+					logger.info("============> QueueMesasgeListener 메세지 타입 : " + messageType);
+					@SuppressWarnings({ "unchecked", "unused" })
+					LinkedHashMap<String, Object> map = (LinkedHashMap<String, Object>) data;
+					
+					if (messageType.RANKING.equals(messageType)) {	
+						RankingMessage vo = new RankingMessage();
+						vo.setGameId(new Long((Integer)map.get("gameId")));
+						vo.setUuid((String)map.get("uuid"));
+						vo.setClearLineCount((int)map.get("clearLineCount"));
+						
+						rankingService.save(vo.getGameId(), vo.getUuid(), vo.getClearLineCount());
+						return;
+					}
+					
+					logger.error("처리가 불가능한 메세지가 도착했습니다. : " + messageType);
+					return;
+				}
+			};
+			
+			listener = new QueueMesasgeListener(QueueInfo.SERVICE_RANKING_QUEUE_NAME, handler);
+			listener.start();
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		}
 	}
 	
 	
