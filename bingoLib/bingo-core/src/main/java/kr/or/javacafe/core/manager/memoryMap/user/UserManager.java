@@ -1,5 +1,6 @@
 package kr.or.javacafe.core.manager.memoryMap.user;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -18,7 +19,7 @@ public class UserManager {
 	private Logger logger = LoggerFactory.getLogger(MessageSender.class);
 
 	
-	private HashMap<String, UserVO> userMemeory = new HashMap<String, UserVO>();
+	private HashMap<String, UserVO> userMemory = new HashMap<String, UserVO>();
 	private String URL;
 	
 	
@@ -27,6 +28,9 @@ public class UserManager {
 	}
 	
 	
+	/**
+	 * 메모리 생성 작업을 시작한다.
+	 */
 	public void start() {
 		RestTemplate client = new RestTemplate();
 		ResponseEntity<List> entity;
@@ -55,10 +59,38 @@ public class UserManager {
 			vo.setCompany((String)map.get("company"));
 			vo.setPhone((String)map.get("phone"));
 			
-			userMemeory.put(vo.getUuid(), vo);
+			userMemory.put(vo.getUuid(), vo);
 		}
 
-		logger.info("[메모리캐시] 사용자 정보 생성 " + userMemeory.size());
+		logger.info("[메모리캐시] 사용자 정보 생성 " + userMemory.size());
 	}
 	
+	
+	
+	/**
+	 * 요청한 사용자 정보를 제공한다. 
+	 */
+	public UserVO getUser(String uuid) {
+		return userMemory.get(uuid);
+	}
+	
+	
+	
+	/**
+	 * 전체 사용자 정보를 제공한다.
+	 */
+	public List<UserVO> getUsers() {
+		return new ArrayList<UserVO>(userMemory.values());
+	}
+	
+	
+	
+	
+	
 }
+
+
+
+
+
+
