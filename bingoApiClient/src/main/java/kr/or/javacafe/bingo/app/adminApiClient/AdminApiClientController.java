@@ -1,5 +1,7 @@
 package kr.or.javacafe.bingo.app.adminApiClient;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -15,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 
 import kr.or.javacafe.bingo.app.apiClient.GameCheckVO;
 import kr.or.javacafe.bingo.app.apiClient.GameVO;
+import kr.or.javacafe.bingo.app.apiClient.RankingVO;
 import kr.or.javacafe.bingo.config.webSocket.PushCodeType;
 import kr.or.javacafe.bingo.config.webSocket.PushHandler;
 import kr.or.javacafe.bingo.manager.MemoryManager;
@@ -88,6 +91,54 @@ public class AdminApiClientController {
 	}
 
 	
+	
+	/**
+	 * [Api Proxy] 전체 사용자 게임에 Clear 된 라인 카운트 조회
+	 * @param gameId
+	 * @return
+	 */
+	@RequestMapping(value = "/gameRanking/gameId/{gameId}", method = RequestMethod.GET)
+	public ResponseEntity<?> gameRanking(@PathVariable Long gameId) {
+		try {
+			RestTemplate client = new RestTemplate();
+			RankingUserVO[] rankings = client.getForObject("http://localhost:9701/api/ranking/game/" + gameId, RankingUserVO[].class);
+			
+			List<RankingUserVO> result = new ArrayList<RankingUserVO>();
+			for (int i=0; i<rankings.length; i++) {
+				RankingUserVO vo = new RankingUserVO();
+				vo.setId(rankings[i].getId());
+				vo.setGameId(rankings[i].getGameId());
+				vo.setUuid(rankings[i].getUuid());
+				vo.setClearLineCount(rankings[i].getClearLineCount());
+				
+				UserVO user = memoryManager.findUser(rankings[i].getUuid());
+				vo.setName(user.getName());
+				vo.setEmail(user.getEmail());
+				vo.setCompany(user.getCompany());
+				vo.setPhone(user.getPhone());
+						
+				result.add(vo);
+			}			
+			result.sort(
+					(RankingUserVO vo1, RankingUserVO vo2) 
+						-> vo2.getClearLineCount()-vo1.getClearLineCount()
+			);
+			
+			int rankingCnt = 1;
+			for (RankingUserVO vo : result) {
+				vo.setRanking(rankingCnt);
+				rankingCnt++;
+			}
+						
+			return new ResponseEntity<List<RankingUserVO>>(result, HttpStatus.OK);
+			
+		} catch (Exception ex) {
+			logger.error("API 호출에 실패하였습니다. " + "[사용자별 게임에 Clear 된 라인 카운트 조회] " + ex.getMessage());
+			ex.printStackTrace();
+		}
+
+		return new ResponseEntity<List<RankingVO>>(new ArrayList(), HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 	
 	
 	

@@ -5,3 +5,6 @@
 .offline {font-weight:bold; font-size:20px; color:red;}
 
 .clear {background-color:black; color:white;}
+
+.winner {font-weight:bold; font-size:30px; color:green;}
+.general {font-size:20px;}

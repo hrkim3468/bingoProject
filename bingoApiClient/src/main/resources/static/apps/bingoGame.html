@@ -17,10 +17,11 @@
 
 	
 <div class="container">
-    <h1><span id="id_div_name"></span> 님을 위한 <span id="id_div_gameId"></span>번 게임판</h1>
+    <h1><span id="id_div_name" class="winner"></span> 님을 위한 <span id="id_div_gameId" class="winner"></span>번 게임판</h1>
     
     <h3>숫자 세팅은 시스템에서 랜덤하게 생성되었습니다.</h3>
     <h3>가장 먼저 5라인이 CLEAR 될 경우 승리자가 됩니다.</h3>
+    <h1 id="id_div_winner" class="winner" style="display:none">축하합니다. 5라인을 완성하셨습니다.!!!!</h1>
     
     <br>
     <br>
@@ -190,7 +191,8 @@
 			// 게임판의 Clear 라인수를 갱신한다.
 			// --------------------------------------------------
 			console.log("RANKING_RESET : " + obj.text);
-			fnGameClearLineCountRendering();
+			
+			fnGameClearLineCountRendering();			
 
 		} else {
 			console.log("알수없는 code가 도착하였습니다.");	

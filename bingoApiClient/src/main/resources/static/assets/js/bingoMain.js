@@ -32,6 +32,14 @@ Handlebars.registerHelper('toDateFormat', function(options) {
 	return date.toString();
 });
 
+Handlebars.registerHelper('winnerFormat', function(options) {
+	if (this.ranking <= 5) {
+		return "class='winner'";
+	} else {
+		return "class='general'";
+	}
+});
+
 
 //API를 조회하여 Template을 이용하여 화면에 리스트를 그린다.
 function fnTemplateListRendering(url, templateName, randerKey) {
@@ -83,7 +91,6 @@ function fnGameDataRendering() {
 				$("#id_checkNumber_" + json[i].dataNumber).val(json[i].dataIndex);
 			}
 			fnGameCheckNumberRendering();
-			fnGameClearLineCountRendering();
 		},
 		error: function(xhr, info) {
 			alert("Api 호출에 실패하였습니다. : fnGameDataRendering()");
@@ -105,7 +112,9 @@ function fnGameCheckNumberRendering() {
 		success: function(json) {
 			for (var i in json) {
 				var cellKey = $("#id_checkNumber_" + json[i].checkNumber).val();
-				$("#id_gameCell_" + cellKey).addClass("clear");	
+				$("#id_gameCell_" + cellKey).addClass("clear");
+				
+				fnGameClearLineCountRendering();
 			}
 			$("#id_push_gameCheckCount").html(json.length);
 		},
@@ -117,7 +126,7 @@ function fnGameCheckNumberRendering() {
 
 
 
-// Clear 라인수를 표시해준다. (WebSocket Push가 들어올때마다 Ajax를 요청한다.)
+// 사용자별로 Clear 라인수를 표시해준다. (WebSocket Push가 들어올때마다 Ajax를 요청한다.)
 function fnGameClearLineCountRendering() {
 	var url = "/api/bingo/gameClearLineCount/gameId/" + getParameterByName('gameId') + "/uuid/" + getParameterByName('uuid');
 	$.ajax({
@@ -127,12 +136,19 @@ function fnGameClearLineCountRendering() {
 		data: "",
 		success: function(json) {
 			$("#id_push_gameClearLineCount").html(json.clearLineCount);
+			
+			if ($(".clear").length) {
+				$(".clear").css("background-color","green");
+				$("#id_div_winner").show();
+			}
 		},
 		error: function(xhr, info) {
 			alert("Api 호출에 실패하였습니다. : fnGameClearLineCountRendering()");
 		}
 	});		
 }
+
+
 
 
 
