@@ -1,6 +1,7 @@
 package kr.or.javacafe.bingo.manager;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -10,6 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.or.javacafe.bingo.config.webSocket.PushCodeType;
+import kr.or.javacafe.bingo.config.webSocket.PushHandler;
+import kr.or.javacafe.core.manager.memoryMap.user.UserVO;
 import kr.or.javacafe.core.manager.queue.env.MessageType;
 import kr.or.javacafe.core.manager.queue.env.QueueInfo;
 import kr.or.javacafe.core.manager.queue.message.ConfigMessage;
@@ -33,6 +37,9 @@ public class QueueManager {
 	@Autowired
 	private MemoryManager memoryManager;
 
+	@Autowired
+	private PushHandler pushHandler;
+	
 	
 	
 	/**
@@ -44,7 +51,6 @@ public class QueueManager {
 	@PostConstruct
 	public void init() {
 		try {
-			// 설정정보 전송
 			configSender = new ConfigMessageSender();
 			
 			// 설정정보 전송
@@ -112,6 +118,13 @@ public class QueueManager {
 					
 					if (messageType.RESET.equals(messageType)) {
 						memoryManager.userManagerReset();
+						return;
+					
+					} else if (messageType.RANKING_CHANGE.equals(messageType)) {
+						List<UserVO> users = memoryManager.findAll();
+						for (UserVO user : users) {
+							pushHandler.sendMessage(PushCodeType.RANKING_RESET, new Long((Integer)map.get("gameId")), 0, user.getUuid());
+						}
 						return;
 					}
 					

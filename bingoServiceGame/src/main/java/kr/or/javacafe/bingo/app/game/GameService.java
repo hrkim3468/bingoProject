@@ -37,11 +37,11 @@ public class GameService {
 	
 	
 	@Transactional
-	public GameCheck createGameCheck(Long id, int checkNumber) {
-		Game game = repository.findOne(id);
-		GameCheck gameCheck = gameCheckService.create(game, checkNumber);
+	public GameCheck createGameCheck(Long gameId, int checkNumber) {
+		Game game = repository.findOne(gameId);
+		GameCheck gameCheck = gameCheckService.createGameCheck(game, checkNumber);
 		
-		gameCheckService.aSyncRankingCheck(game);
+		gameCheckService.aSyncRankingCheckForAllUser(game);
 		
 		return gameCheck;
 	}

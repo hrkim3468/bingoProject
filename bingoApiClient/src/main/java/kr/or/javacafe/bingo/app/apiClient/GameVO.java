@@ -1,28 +1,12 @@
-package kr.or.javacafe.bingo.app.game;
+package kr.or.javacafe.bingo.app.apiClient;
 
 import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import kr.or.javacafe.core.util.type.Status;
 
-@Entity(name = "GAME")
-public class Game {
+public class GameVO {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
-	@Column(nullable = false)
 	private Status status = Status.USE;
-	
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime = new Date();
 
 	

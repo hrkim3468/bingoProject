@@ -4,6 +4,7 @@ public enum MessageType {
 
 	SERVER_CONFIG("SERVER_CONFIG", "서버정보 메시지"),
 	RANKING("RANKING", "사용자 랭킹 메시지"),
+	RANKING_CHANGE("RANKING_CHANGE", "사용자 랭킹 변경 메시지"),
 	RESET("RESET", "리셋 메시지");
 	
 	

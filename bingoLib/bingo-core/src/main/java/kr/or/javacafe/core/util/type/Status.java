@@ -1,4 +1,4 @@
-package kr.or.javacafe.bingo.app.common;
+package kr.or.javacafe.core.util.type;
 
 public enum Status {
 	

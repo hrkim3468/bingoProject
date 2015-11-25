@@ -13,10 +13,12 @@ import org.springframework.stereotype.Service;
 import kr.or.javacafe.core.manager.queue.env.MessageType;
 import kr.or.javacafe.core.manager.queue.env.QueueInfo;
 import kr.or.javacafe.core.manager.queue.message.ConfigMessage;
+import kr.or.javacafe.core.manager.queue.message.RankingChangeMessage;
 import kr.or.javacafe.core.manager.queue.message.RankingMessage;
 import kr.or.javacafe.core.manager.queue.receiver.ExchangeMesasgeListener;
 import kr.or.javacafe.core.manager.queue.receiver.MessageHandler;
 import kr.or.javacafe.core.manager.queue.sender.ConfigMessageSender;
+import kr.or.javacafe.core.manager.queue.sender.RankingChangeMessageSender;
 import kr.or.javacafe.core.manager.queue.sender.RankingMessageSender;
 import kr.or.javacafe.core.spring.prop.SystemProperty;
 
@@ -27,6 +29,7 @@ public class QueueManager {
 
 	private ConfigMessageSender configSender;
 	private RankingMessageSender rankingSender;
+	private RankingChangeMessageSender rankingChangeSender;
 	
 	private ExchangeMesasgeListener exListener;
 	
@@ -51,6 +54,7 @@ public class QueueManager {
 		try {
 			configSender = new ConfigMessageSender();
 			rankingSender = new RankingMessageSender();
+			rankingChangeSender = new RankingChangeMessageSender();
 			
 			// 설정정보 전송
 			serverConfigSend();
@@ -73,6 +77,9 @@ public class QueueManager {
 	public void destroy() {
 		try {
 			configSender.release();
+			rankingSender.release();
+			rankingChangeSender.release();
+			
 			exListener.release();
 			
 		} catch (Exception e) {
@@ -114,6 +121,24 @@ public class QueueManager {
 			message.setClearLineCount(clearLineCount);
 			
 			rankingSender.send(message);
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		}		
+	}
+
+	
+	
+	/**
+	 * Ranking Change 메시지 전송 함수
+	 */
+	public void rankingChangeSend(Long gameId) {
+		try {		
+			RankingChangeMessage message = new RankingChangeMessage();
+			message.setGameId(gameId);
+			
+			rankingChangeSender.send(message);
 			
 		} catch (Exception e) {
 			logger.error(e.getMessage());
