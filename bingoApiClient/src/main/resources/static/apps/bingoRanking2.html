@@ -73,7 +73,7 @@
 
 
 <script type="text/javascript">
-	var ws = new WebSocket("ws://localhost:8080/push?gameId=" + getParameterByName('gameId') + "&uuid=" + getParameterByName('uuid'));
+	var ws = new WebSocket("ws://14.63.214.161:8080/push?gameId=" + getParameterByName('gameId') + "&uuid=" + getParameterByName('uuid'));
 	
 	ws.onopen = function() {
 		console.log("WebSocket Connect......");
