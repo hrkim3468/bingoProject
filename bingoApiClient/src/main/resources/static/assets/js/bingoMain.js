@@ -153,6 +153,7 @@ function fnGameClearLineCountRendering() {
 
 
 
+
 // 사용자별 게임판 화면으로 이동
 function fnGoGame(gameId) {
 	location.href = "/apps/bingoGame.html?gameId=" + gameId + "&uuid=" + getParameterByName('uuid');
