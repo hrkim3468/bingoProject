@@ -59,7 +59,7 @@ configurations {
 }
 
 dependencies {
-    compile project(':bingoFrontend')
+    //compile project(':bingoFrontend')
     compile("org.springframework.boot:spring-boot-starter-web")
 	compile("org.springframework.boot:spring-boot-starter-mobile")
 	compile("org.apache.tomcat.embed:tomcat-embed-jasper")
