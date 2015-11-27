@@ -206,16 +206,16 @@
 
 <script>
 	function fnAdminSelection(cellNumber) {
-		var cellKey = $("#id_checkNumber_" + cellNumber).val();
+		var cellValue = $("#id_gameCell_" + cellNumber).html();
 
-		var url = "/api/bingo/admin/createGameCheck/gameId/" + getParameterByName('gameId') + "/check/" + cellKey;
+		var url = "/api/bingo/admin/createGameCheck/" + getParameterByName('gameId') + "/check/" + cellValue;
 		$.ajax({
 			type: "get",
 			cache: false,
 			url: url,
 			data: "",
 			success: function(json) {
-				callFND(cellKey);
+				callFND(cellValue);
 			},
 			error: function(xhr, info) {
 				alert("Api 호출에 실패하였습니다. : fnGameClearLineCountRendering()");
