@@ -137,7 +137,7 @@ function fnGameClearLineCountRendering() {
 		success: function(json) {
 			$("#id_push_gameClearLineCount").html(json.clearLineCount);
 			
-			if ($(".clear").length) {
+			if ($(".clear").length > 4) {
 				$(".clear").css("background-color","green");
 				$("#id_div_winner").show();
 			}
