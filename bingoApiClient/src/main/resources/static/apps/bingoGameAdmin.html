@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title>빙고게임</title>
+
+	<link href="/webjars/bootstrap/3.3.0/css/bootstrap.css" rel="stylesheet"/>
+	<link href="/webjars/bootstrap/3.3.0/css/bootstrap-theme.css" rel="stylesheet"/>
+	<link href="/webjars/jquery-ui/1.11.2/jquery-ui.css" rel="stylesheet"/>
+	<link href="../assets/css/bingo.css" rel="stylesheet"/>
+
+</head>
+<body>
+
+	
+<div class="container">
+
+    <h1>관리자 <span id="id_div_name" class="winner"></span> 님을 위한 <span id="id_div_gameId" class="winner"></span>번 게임판</h1>
+    
+    <h3>숫자 세팅은 시스템에서 랜덤하게 생성되었습니다.</h3>
+    <h3>가장 먼저 5라인이 CLEAR 될 경우 승리자가 됩니다.</h3>
+    <h1 id="id_div_winner" class="winner" style="display:none">5라인이 넘었지만 관리자라 무효임.</h1>
+    
+    <br>
+    <br>
+    
+    <h5>서버 접속 상태 : <span id="id_push_status" class="offline">OFF-LINE</span></h5>
+	<h5>현재 <span id="id_push_gameCheckCount" class="offline">0</span>개의 카운트가 선택되었습니다.</h5>   
+	<h5>현재 <span id="id_push_gameClearLineCount" class="offline">0</span>개의 라인이 CLEAR 되었습니다.</h5>    
+
+    
+    <div>
+        <table id="id_table_game" class="table-striped table-bordered table-condensed">
+			<tr class="tr1">
+			    <td id="id_gameCell_1" class="td1" onclick="fnAdminSelection(1);">-</td>
+			    <td id="id_gameCell_2" class="td1" onclick="fnAdminSelection(2);">-</td>
+			    <td id="id_gameCell_3" class="td1" onclick="fnAdminSelection(3);">-</td>
+			    <td id="id_gameCell_4" class="td1" onclick="fnAdminSelection(4);">-</td>
+			    <td id="id_gameCell_5" class="td1" onclick="fnAdminSelection(5);">-</td>
+			</tr>
+			<tr class="tr1">
+			    <td id="id_gameCell_6" class="td1" onclick="fnAdminSelection(6);">-</td>
+			    <td id="id_gameCell_7" class="td1" onclick="fnAdminSelection(7);">-</td>
+			    <td id="id_gameCell_8" class="td1" onclick="fnAdminSelection(8);">-</td>
+			    <td id="id_gameCell_9" class="td1" onclick="fnAdminSelection(9);">-</td>
+			    <td id="id_gameCell_10" class="td1" onclick="fnAdminSelection(10);">-</td>
+			</tr>
+			<tr class="tr1">
+			    <td id="id_gameCell_11" class="td1" onclick="fnAdminSelection(11);">-</td>
+			    <td id="id_gameCell_12" class="td1" onclick="fnAdminSelection(12);">-</td>
+			    <td id="id_gameCell_13" class="td1" onclick="fnAdminSelection(13);">-</td>
+			    <td id="id_gameCell_14" class="td1" onclick="fnAdminSelection(14);">-</td>
+			    <td id="id_gameCell_15" class="td1" onclick="fnAdminSelection(15);">-</td>
+			</tr>
+			<tr class="tr1">
+			    <td id="id_gameCell_16" class="td1" onclick="fnAdminSelection(16);">-</td>
+			    <td id="id_gameCell_17" class="td1" onclick="fnAdminSelection(17);">-</td>
+			    <td id="id_gameCell_18" class="td1" onclick="fnAdminSelection(18);">-</td>
+			    <td id="id_gameCell_19" class="td1" onclick="fnAdminSelection(19);">-</td>
+			    <td id="id_gameCell_20" class="td1" onclick="fnAdminSelection(20);">-</td>
+			</tr>
+			<tr class="tr1">
+			    <td id="id_gameCell_21" class="td1" onclick="fnAdminSelection(21);">-</td>
+			    <td id="id_gameCell_22" class="td1" onclick="fnAdminSelection(22);">-</td>
+			    <td id="id_gameCell_23" class="td1" onclick="fnAdminSelection(23);">-</td>
+			    <td id="id_gameCell_24" class="td1" onclick="fnAdminSelection(24);">-</td>
+			    <td id="id_gameCell_25" class="td1" onclick="fnAdminSelection(25);">-</td>
+			</tr>
+        </table>    
+    </div>
+    
+</div>	
+
+
+<input type="hidden" id="id_checkNumber_1" />
+<input type="hidden" id="id_checkNumber_2" />
+<input type="hidden" id="id_checkNumber_3" />
+<input type="hidden" id="id_checkNumber_4" />
+<input type="hidden" id="id_checkNumber_5" />
+<input type="hidden" id="id_checkNumber_6" />
+<input type="hidden" id="id_checkNumber_7" />
+<input type="hidden" id="id_checkNumber_8" />
+<input type="hidden" id="id_checkNumber_9" />
+<input type="hidden" id="id_checkNumber_10" />
+<input type="hidden" id="id_checkNumber_11" />
+<input type="hidden" id="id_checkNumber_12" />
+<input type="hidden" id="id_checkNumber_13" />
+<input type="hidden" id="id_checkNumber_14" />
+<input type="hidden" id="id_checkNumber_15" />
+<input type="hidden" id="id_checkNumber_16" />
+<input type="hidden" id="id_checkNumber_17" />
+<input type="hidden" id="id_checkNumber_18" />
+<input type="hidden" id="id_checkNumber_19" />
+<input type="hidden" id="id_checkNumber_20" />
+<input type="hidden" id="id_checkNumber_21" />
+<input type="hidden" id="id_checkNumber_22" />
+<input type="hidden" id="id_checkNumber_23" />
+<input type="hidden" id="id_checkNumber_24" />
+<input type="hidden" id="id_checkNumber_25" />
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- build:js ../assets/js/bingoMain.min.js -->
+	<script src="/webjars/jquery/2.1.1/jquery.js"></script>
+	<script src="/webjars/jquery-ui/1.11.2/jquery-ui.js"></script>
+	<script src="/webjars/bootstrap/3.3.0/js/bootstrap.js"></script>
+	<script src="/webjars/handlebars/3.0.0/handlebars.js"></script>
+	<!-- endbuild -->
+
+
+
+
+<script type="text/javascript" src="../assets/js/bingoMain.js"></script>
+<script type="text/javascript">
+	$("#id_div_gameId").html(getParameterByName('gameId'));
+	fnUserInfoRendering("id_div_name");
+	fnGameDataRendering();
+</script>
+	
+	
+	
+
+<script type="text/javascript">
+	var ws = new WebSocket("ws://14.63.214.161:8080/push?gameId=" + getParameterByName('gameId') + "&uuid=" + getParameterByName('uuid'));
+	//var ws = new WebSocket("ws://localhost:8080/push?gameId=" + getParameterByName('gameId') + "&uuid=" + getParameterByName('uuid'));
+	
+	ws.onopen = function() {
+		$("#id_push_status").removeClass("offline").addClass("online");
+		$("#id_push_status").html("ON-LINE");
+		
+		$("#id_push_gameCheckCount").removeClass("offline").addClass("online");
+		$("#id_push_gameCheckCount").html();
+		
+		$("#id_push_gameClearLineCount").removeClass("offline").addClass("online");
+		$("#id_push_gameClearLineCount").html();
+		
+		//ws.send("HelloWorld");
+		console.log("WebSocket Connect......");
+	}
+	
+	ws.onclose = function(e) {
+		$("#id_push_status").removeClass("online").addClass("offline");
+		$("#id_push_status").html("OFF-LINE");
+		
+		$("#id_push_gameCheckCount").removeClass("online").addClass("offline");
+		$("#id_push_gameCheckCount").html("-");
+		
+		$("#id_push_gameClearLineCount").removeClass("online").addClass("offline");
+		$("#id_push_gameClearLineCount").html("-");
+
+		console.log("WebSocket DisConnect.......");
+	}
+	
+	ws.onerror = function(e) {
+		console.log("WebSocket Error......");
+		console.log(e);
+	}
+
+	ws.onmessage = function(message) {
+		console.log("도착한 메시지 : " + message.data);
+		var obj = $.parseJSON(message.data).data;
+		if (obj.code == "WELCOME_TEXT") {
+			// --------------------------------------------------
+			// 로깅
+			// --------------------------------------------------
+			console.log("WELCOME_TEXT : " + obj.text);
+		
+		} else if (obj.code == "CHECK_NUMBER") {
+			// --------------------------------------------------
+			// 게임판의 숫자를 갱신한다.
+			// --------------------------------------------------
+			console.log("CHECK_NUMBER : " + obj.text);
+			
+			var cellKey = $("#id_checkNumber_" + obj.text).val();
+			$("#id_gameCell_" + cellKey).addClass("clear");
+			
+			$("#id_push_gameCheckCount").html($(".clear").length);
+			$("#id_push_gameClearLineCount").html("-"); // Async로 처리가 되므로 응답이 늦어질수 있으므로 숫자 제거
+			
+		} else if (obj.code == "RANKING_RESET") {
+			// --------------------------------------------------
+			// 게임판의 Clear 라인수를 갱신한다.
+			// --------------------------------------------------
+			console.log("RANKING_RESET : " + obj.text);
+			
+			fnGameClearLineCountRendering();			
+
+		} else {
+			console.log("알수없는 code가 도착하였습니다.");	
+		}
+	}
+</script>
+
+
+
+<script>
+	function fnAdminSelection(cellNumber) {
+		var cellKey = $("#id_checkNumber_" + cellNumber).val();
+
+		var url = "/api/bingo/admin/createGameCheck/gameId/" + getParameterByName('gameId') + "/check/" + cellKey;
+		$.ajax({
+			type: "get",
+			cache: false,
+			url: url,
+			data: "",
+			success: function(json) {
+				callFND(cellKey);
+			},
+			error: function(xhr, info) {
+				alert("Api 호출에 실패하였습니다. : fnGameClearLineCountRendering()");
+			}
+		});
+	}
+
+	
+	// 로컬망에 붙어있는 라즈베리파이 서버를 호출한다.
+	// 행사장 아이피 확인후 변경 할것..
+	function callFND(fndNumber) {
+		var url = "http://localhost/fnd/" + fndNumber;
+		$.ajax({
+			type: "get",
+			cache: false,
+			url: url,
+			data: "",
+			success: function(json) {
+				alert("FND에 숫자 전달 성공 : " + fndNumber);
+			},
+			error: function(xhr, info) {
+				alert("FND에 숫자 전달 실패 : " + fndNumber);
+			}
+		});
+	}
+	
+	
+</script>
+
+
+
+
+</body>
+</html>
+
+
