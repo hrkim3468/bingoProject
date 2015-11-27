@@ -17,6 +17,7 @@
 
 	
 <div class="container">
+
     <h1><span id="id_div_name" class="winner"></span> 님을 위한 <span id="id_div_gameId" class="winner"></span>번 게임판</h1>
     
     <h3>숫자 세팅은 시스템에서 랜덤하게 생성되었습니다.</h3>
@@ -131,7 +132,8 @@
 	
 
 <script type="text/javascript">
-	var ws = new WebSocket("ws://localhost:8080/push?gameId=" + getParameterByName('gameId') + "&uuid=" + getParameterByName('uuid'));
+	var ws = new WebSocket("ws://14.63.214.161:8080/push?gameId=" + getParameterByName('gameId') + "&uuid=" + getParameterByName('uuid'));
+	//var ws = new WebSocket("ws://localhost:8080/push?gameId=" + getParameterByName('gameId') + "&uuid=" + getParameterByName('uuid'));
 	
 	ws.onopen = function() {
 		$("#id_push_status").removeClass("offline").addClass("online");

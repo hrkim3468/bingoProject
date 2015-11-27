@@ -117,11 +117,15 @@ public class AdminApiClientController {
 				vo.setCompany(user.getCompany());
 				vo.setPhone(user.getPhone());
 						
-				result.add(vo);
+				// 관리자는 목록에서 제거
+				if (!vo.getName().equals("김흥래")) {
+					result.add(vo);
+				}
 			}			
+			
+			// 카운트 역순으로 정렬
 			result.sort(
-					(RankingUserVO vo1, RankingUserVO vo2) 
-						-> vo2.getClearLineCount()-vo1.getClearLineCount()
+					(RankingUserVO vo1, RankingUserVO vo2) -> vo2.getClearLineCount()-vo1.getClearLineCount()
 			);
 			
 			int rankingCnt = 1;
