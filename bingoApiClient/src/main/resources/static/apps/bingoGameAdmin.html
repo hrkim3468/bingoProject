@@ -227,7 +227,7 @@
 	// 로컬망에 붙어있는 라즈베리파이 서버를 호출한다.
 	// 행사장 아이피 확인후 변경 할것..
 	function callFND(fndNumber) {
-		var url = "http://localhost/fnd/" + fndNumber;
+		var url = "http://192.168.0.2:8080/fnd/show/" + fndNumber;
 		$.ajax({
 			type: "get",
 			cache: false,
